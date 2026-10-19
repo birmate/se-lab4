@@ -76,4 +76,42 @@ class GT4500Test {
         boolean result = failingShip.fireTorpedo(FiringMode.SINGLE);
         assertEquals(false, result);
     }
+
+    @Test
+    void fireTorpedo_Single_SecondaryEmpty_PrimaryFiresAgain() {
+        GT4500 customShip = new GT4500(10, 0.0, 0, 0.0);
+        customShip.fireTorpedo(FiringMode.SINGLE); 
+        boolean result = customShip.fireTorpedo(FiringMode.SINGLE); 
+        assertEquals(true, result);
+    }
+
+    @Test
+    void fireTorpedo_Single_SecondaryFails() {
+        GT4500 customShip = new GT4500(10, 0.0, 10, 1.0);
+        customShip.fireTorpedo(FiringMode.SINGLE);
+        boolean result = customShip.fireTorpedo(FiringMode.SINGLE);
+        assertEquals(false, result);
+    }
+
+    @Test
+    void fireTorpedo_All_PrimaryEmpty_SecondarySuccess() {
+        GT4500 customShip = new GT4500(0, 0.0, 10, 0.0);
+        boolean result = customShip.fireTorpedo(FiringMode.ALL);
+        assertEquals(true, result);
+    }
+
+    @Test
+    void fireTorpedo_All_SecondaryEmpty_PrimarySuccess() {
+        GT4500 customShip = new GT4500(10, 0.0, 0, 0.0);
+        boolean result = customShip.fireTorpedo(FiringMode.ALL);
+        assertEquals(true, result);
+    }
+
+    @Test
+    void fireTorpedo_Single_AfterPrimary_BothEmpty_Fails() {
+        GT4500 customShip = new GT4500(1, 0.0, 0, 0.0);
+        customShip.fireTorpedo(FiringMode.SINGLE); 
+        boolean result = customShip.fireTorpedo(FiringMode.SINGLE); 
+        assertEquals(false, result);
+    }
 }
